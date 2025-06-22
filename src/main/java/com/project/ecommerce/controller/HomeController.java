@@ -40,8 +40,11 @@ public class HomeController {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        if (username == null || username.isEmpty() || password == null || password.isEmpty()) {
-            return "redirect:/login?missing=true";
+        if (username == null || username.isEmpty()) {
+            return "redirect:/login?missing=username";
+        }
+        else if(password == null || password.isBlank()){
+            return "redirect:/login?missing=password";
         }
 
         try {

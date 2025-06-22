@@ -35,26 +35,26 @@ public class HomeController {
         return "login"; // loads login.html
     }
 
-    @PostMapping("/login")
-    public String loginSubmit(HttpServletRequest request) {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+    // @PostMapping("/custom-login")
+    // public String loginSubmit(HttpServletRequest request) {
+    //     String username = request.getParameter("username");
+    //     String password = request.getParameter("password");
 
-        if (username == null || username.isEmpty()) {
-            return "redirect:/login?missing=username";
-        }
-        else if(password == null || password.isBlank()){
-            return "redirect:/login?missing=password";
-        }
+    //     if (username == null || username.isEmpty()) {
+    //         return "redirect:/login?missing=username";
+    //     }
+    //     else if(password == null || password.isBlank()){
+    //         return "redirect:/login?missing=password";
+    //     }
 
-        try {
-            Authentication auth = authManager.authenticate(
-                new UsernamePasswordAuthenticationToken(username, password));
-            // Successful login → redirect to home
-            return "redirect:/home";
-        } catch (AuthenticationException e) {
-            return "redirect:/login?error=true";
-        }
-    }
+    //     try {
+    //         Authentication auth = authManager.authenticate(
+    //             new UsernamePasswordAuthenticationToken(username, password));
+    //         // Successful login → redirect to home
+    //         return "redirect:/home";
+    //     } catch (AuthenticationException e) {
+    //         return "redirect:/login?error=true";
+    //     }
+    // }
 
 }

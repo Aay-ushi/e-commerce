@@ -1,5 +1,6 @@
 package com.project.ecommerce.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,42 +18,42 @@ public class ProductController {
     private static List<String> products = new ArrayList<>(List.of("iPhone", "MacBook", "AirPods"));
 
    @GetMapping
-    public List<String> getAllProducts() {
-        return products;
+    public ResponseEntity<List<String>> getAllProducts() {
+        return ResponseEntity.ok(products);
     }
 
     // GET /products/{id} - return a single product by ID
     @GetMapping("/{id}")
-    public String getProductById(@PathVariable int id) {
+    public ResponseEntity<?> getProductById(@PathVariable int id) {
         if (id < 0 || id >= products.size()) {
-            return "Product not found";
+            return ResponseEntity.status(404).body("Product not found");
         }
-        return products.get(id);
+        return ResponseEntity.ok(products.get(id));
     }
 
 
 
     // POST /products - create a product (mocked)
     @PostMapping
-    public String createProduct(@RequestBody String productName) {
+    public ResponseEntity<String> createProduct(@RequestBody String productName) {
         products.add(productName);
-        return "Product created: " + productName;
+        return ResponseEntity.status(201).body("Product created: " + productName);
     }
 
     // PUT /products/{id} - update a product (mocked)
     @PutMapping("/{id}")
-    public String updateProduct(@PathVariable int id, @RequestBody String updatedName) {
-        return "Product with ID " + id + " updated to: " + updatedName;
+    public ResponseEntity<String> updateProduct(@PathVariable int id, @RequestBody String updatedName) {
+        return ResponseEntity.status(404).body("Product not found");
     }
 
     // DELETE /products/{id} - delete a product (mocked)
     @DeleteMapping("/{id}")
-    public String deleteProduct(@PathVariable int id) {
+    public ResponseEntity<String> deleteProduct(@PathVariable int id) {
         if (id < 0 || id >= products.size()) {
-            return "Product not found";
+            return ResponseEntity.status(404).body("Product not found");;
         }
         String removed = products.remove(id);
-        return "Product deleted: " + removed;
+        return ResponseEntity.ok("Product deleted: " + removed);
     }
 
 

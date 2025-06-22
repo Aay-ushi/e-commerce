@@ -23,13 +23,15 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()     
-                .antMatchers("/login", "/css/**").permitAll()
+                .antMatchers("/login", "/custom-login", "/api/products/**", "/css/**", "/js/**").permitAll()
                 .antMatchers("/api/products").authenticated()
                 .anyRequest().authenticated()
 								.and()
             .formLogin()
                 .loginPage("/login")
+                .loginProcessingUrl("/custom-login")
                 .defaultSuccessUrl("/home", true)
+                .failureUrl("/login?error=true")
                 .permitAll()
 								.and()
             .logout()

@@ -12,15 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.*;
 
 @RestController
-@RequestMapping("/products")
+@RequestMapping("/api/products")
 public class ProductController {
-    private static final List<String> products = Arrays.asList("iPhone", "MacBook", "AirPods");
+    private static List<String> products = new ArrayList<>(List.of("iPhone", "MacBook", "AirPods"));
 
    @GetMapping
     public List<String> getAllProducts() {
         return products;
     }
-    
 
     // GET /products/{id} - return a single product by ID
     @GetMapping("/{id}")
@@ -31,9 +30,12 @@ public class ProductController {
         return products.get(id);
     }
 
+
+
     // POST /products - create a product (mocked)
     @PostMapping
     public String createProduct(@RequestBody String productName) {
+        products.add(productName);
         return "Product created: " + productName;
     }
 
@@ -46,6 +48,12 @@ public class ProductController {
     // DELETE /products/{id} - delete a product (mocked)
     @DeleteMapping("/{id}")
     public String deleteProduct(@PathVariable int id) {
-        return "Product with ID " + id + " deleted";
+        if (id < 0 || id >= products.size()) {
+            return "Product not found";
+        }
+        String removed = products.remove(id);
+        return "Product deleted: " + removed;
     }
+
+
 }

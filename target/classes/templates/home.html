@@ -2,8 +2,26 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Home</title>
+    <script>
+        function fetchProducts() {
+            fetch('/api/products')
+                .then(response => response.json())
+                .then(data => {
+                    const list = document.getElementById('productList');
+                    list.innerHTML = '';
+                    data.forEach(item => {
+                        const li = document.createElement('li');
+                        li.textContent = item;
+                        list.appendChild(li);
+                    });
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
 </head>
 <body>
-    <h2>Home</h2>
+    <h1>Welcome! You are logged in.</h1>
+    <button onclick="fetchProducts()">Get Product List</button>
+    <ul id="productList"></ul>
 </body>
 </html>

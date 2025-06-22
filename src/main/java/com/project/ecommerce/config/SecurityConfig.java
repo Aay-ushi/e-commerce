@@ -24,6 +24,7 @@ public class SecurityConfig {
         http
             .authorizeRequests()     
                 .antMatchers("/login", "/css/**").permitAll()
+                .antMatchers("/api/products").authenticated()
                 .anyRequest().authenticated()
 								.and()
             .formLogin()
